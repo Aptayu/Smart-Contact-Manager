@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org" th:replace="base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Sign up</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<div class="my-card mt-3">
+						<div class="container text-center">
+							<img style="width: 80px" th:src="@{/img/enrollment.png}" alt="" />
+						</div>
+						<div th:if="${session.message}"  th:classappend=${session.message.type} class="" role="alert">
+							<p th:text="${session.message.content}"/>
+							<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+						</div>
+						<h1 class="text-center">Register here</h1>
+						<form class="text-bold" th:action="@{/do_register}" method="post" th:object="${contactUser}">
+							<div class="form-group">
+								<label for="name_field">Your name</label> 
+								<input name="name" type="text" class="form-control" th:classappend="${#fields.hasErrors('name') ? 'is-invalid':''}" id="name_field" aria-describedby="emailHelp" placeholder="Enter here" required
+									th:value=${contactUser.name}>
+							</div>
+				  			<div class="invalid-feedback" th:each=" e :${#fields.errors('name')}" th:text="${e}">
+									
+							</div>
+							<div class="form-group">
+								<label for="email_field">Email</label> <input name="email" type="email" class="form-control" id="email_field" aria-describedby="emailHelp" placeholder="Enter here" required
+									th:value=${contactUser.email}>
+							</div>
+							<div class="form-group">
+								<label for="password_field">Password</label> <input name="password" type="password" class="form-control" id="password_field" aria-describedby="emailHelp" placeholder="Enter here" required>
+							</div>
+							<div class="form-group">
+								<label for="name_field">About</label>
+								<textarea name="about" class="form-control" rows="5" id="name_field" aria-describedby="emailHelp" placeholder="Enter here" required th:text=${contactUser.about}></textarea>
+							</div>
+							<div class="form-check">
+								<input name="agreement" type="checkbox" class="form-check-input" id="exampleCheck1"> <label class="form-check-label" for="exampleCheck1">Accept terms and conditions</label>
+							</div>
+							<br>
+							<div class="container text-center">
+								<button type="submit" class="btn btn-primary text-white btn-block">Submit</button>
+								<button type="reset" class="btn btn-warning text-white btn-block">Reset</button>
+							</div>
+
+
+						</form>
+					</div>
+
+
+				</div>
+
+
+
+			</div>
+
+
+
+
+		</div>
+	</section>
+
+
+</body>
+</html>
