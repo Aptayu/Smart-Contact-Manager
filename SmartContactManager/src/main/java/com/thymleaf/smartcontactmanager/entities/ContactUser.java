@@ -32,13 +32,13 @@ public class ContactUser {
 	@Column(length = 500)
 	private String about;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "contactUser")
-	private List<Contacts> contacts = new ArrayList<>();
+	private List<Contact> contacts = new ArrayList<>();
 
-	public List<Contacts> getContacts() {
+	public List<Contact> getContacts() {
 		return contacts;
 	}
 
-	public void setContacts(List<Contacts> contacts) {
+	public void setContacts(List<Contact> contacts) {
 		this.contacts = contacts;
 	}
 

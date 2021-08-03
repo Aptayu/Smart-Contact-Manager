@@ -38,7 +38,7 @@ public class HomeController {
 
 //	This is for registering user
 	@PostMapping("/do_register")
-	public String doRegister(@Valid @ModelAttribute("contactUser") ContactUser contactUser, BindingResult bindingResult,
+	public String doRegister(@Valid @ModelAttribute ContactUser contactUser, BindingResult bindingResult,
 			@RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model,
 			HttpSession session) {
 		session.getAttribute(null);

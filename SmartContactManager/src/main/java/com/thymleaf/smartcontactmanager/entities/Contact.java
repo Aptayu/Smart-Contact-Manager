@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "all_contacts")
-public class Contacts {
+public class Contact {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +25,13 @@ public class Contacts {
 	private String image;
 	@ManyToOne()
 	private ContactUser contactUser;
+
+//	@Override
+//	public String toString() {
+//		return "Contact [cid=" + cid + ", name=" + name + ", secondName=" + secondName + ", work=" + work + ", email="
+//				+ email + ", phone=" + phone + ", about=" + about + ", image=" + image + ", contactUser=" + contactUser
+//				+ "]";
+//	}
 
 	public ContactUser getContactUser() {
 		return contactUser;

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org" th:replace="normal/userbase::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Hi</title>
+</head>
+<body>
+	<section>
+		
+		<div class="card mt-8">
+			<i onclick="toggleSidebar()" class="fas fa-bars m-3"></i>
+			<div class="container text-center">
+				<div class="alert alert-success" role="alert">This is a success alert—check it out!</div>
+			</div>
+			<div class="card-body">
+				<h1 class="text-center">Add contact</h1>
+				<div class="container-fluid mt-1">
+					<div class="row">
+						<div class="col-md-10 offset-md-1">
+							<form action="" th:object="${contact}" enctype="multipart/form-data" method="post" th:action="@{/user/process-contact}" class="mt-2">
+								<!--First name  -->
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fa fa-plus"></i>
+										</div>
+									</div>
+									<input type="text" class="form-control" id="firstname" name="name" placeholder="Enter name here" />
+								</div>
+
+								<!--second name  -->
+								<div class="input-group mt-3">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fa fa-plus"></i>
+										</div>
+									</div>
+									<input type="text" class="form-control" id="secondname" name="secondName" placeholder="Enter last name" />
+								</div>
+								<!-- work -->
+								<div class="input-group mt-3">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fas fa-laptop-house"></i>
+										</div>
+									</div>
+									<input type="text" class="form-control" id="work" name="work" placeholder="Enter designation" />
+								</div>
+								<!--Email  -->
+								<div class="input-group mt-3">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fas fa-hand-holding-medical"></i>
+										</div>
+									</div>
+									<input type="email" class="form-control" id="email" name="email" placeholder="Enter email" />
+								</div>
+								<!--Phone -->
+								<div class="input-group mt-3">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											@
+										</div>
+									</div>
+									<input type="number" class="form-control" id="phone" name="phone" placeholder="Enter mobile number" />
+								</div>
+
+								<!--Phone -->
+								<div class="input-group mt-3">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fa fa-phone"></i>
+										</div>
+									</div>
+									<textarea class="form-control" id="about" name="about" placeholder="Enter contact decription"></textarea>
+								</div>
+								
+								<!-- Image -->
+								<div class="input-group mt-3">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fa fa-file"></i>
+										</div>
+									</div>
+									<input type="file" class="form-control" id="image" name="profileImage"/>
+								</div>
+								<br>
+								<!--Save button  -->
+								<div class="container text-center">
+									<button class="btn btn-outline-primary">Save</button>
+									
+								</div>
+
+
+
+
+
+							</form>
+
+
+
+						</div>
+
+
+					</div>
+
+
+
+				</div>
+
+
+
+			</div>
+
+
+		</div>
+
+
+
+	</section>
+
+</body>
+</html>
