@@ -29,6 +29,7 @@ import com.thymleaf.smartcontactmanager.dao.ContactRepository;
 import com.thymleaf.smartcontactmanager.dao.ContactUserRepository;
 import com.thymleaf.smartcontactmanager.entities.Contact;
 import com.thymleaf.smartcontactmanager.entities.ContactUser;
+import com.thymleaf.smartcontactmanager.helper.Message;
 
 @Controller
 @RequestMapping("/user")
@@ -136,12 +137,56 @@ public class UserController {
 
 //	Getting the details clicking on name
 	@GetMapping("/{cid}/contacts")
-	public String getDetails(@PathVariable("cid") int cid, Model model) {
-//		System.out.println(cid);
-		Optional<Contact> contatOptional = this.contactRepository.findById(cid);
-		Contact contact = contatOptional.get();
-		model.addAttribute("contact", contact);
-		return "normal/contact_detail";
+	public String getDetails(@PathVariable("cid") int cid, Model model, Principal principal, HttpSession session) {
+		try {
+
+			// System.out.println(cid);
+//			person who is login
+			String name = principal.getName();
+
+			Optional<Contact> contatOptional = this.contactRepository.findById(cid);
+			Contact contact = contatOptional.get();
+//			we will compare "name" with the user contact of the id which person is trying to view
+			if (name.equals(contact.getContactUser().getEmail())) {
+				model.addAttribute("contact", contact);
+			}
+			return "normal/contact_detail";
+
+		} catch (Exception e) {
+			session.setAttribute("message", new Message(e.getMessage(), "alert-danger"));
+
+			return "normal/contact_detail";
+
+		}
+
+	}
+
+//	delete a particular contact
+	@GetMapping("/{cid}/delete")
+	public String deleteContact(@PathVariable("cid") int cid, Principal principal, HttpSession session) {
+		try {
+
+			String name = principal.getName();
+			Optional<Contact> contatOptional = this.contactRepository.findById(cid);
+			Contact contact = contatOptional.get();
+
+			if (name.equals(contact.getContactUser().getEmail())) {
+//				we'll set the user associated with it to null otherwise it can create problems
+				contact.setContactUser(null);
+//				we should also be deleting the image associated with in our folder.
+//				getting the image name8
+				String image = contact.getImage();
+				this.contactRepository.delete(contact);
+			}
+			session.setAttribute("message", new Message("Contact deleted successfully", "alert-success"));
+			return "redirect:/user/show_contacts/0";
+
+		} catch (Exception e) {
+			session.setAttribute("message", new Message("Something went wrong. Please try again", "alert-danger"));
+			return "redirect:/user/show_contacts/0";
+
+		}
+
 	}
 
 }

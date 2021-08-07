@@ -6,7 +6,11 @@
 </head>
 <body>
 	<section>
-		<div class="card mr-3 ml-3 mt-4">
+		<div th:if="${session.message}" th:classappend=${session.message.type} class="mt-5" role="alert">
+			<p th:text="${session.message.content}" />
+			<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+		</div>
+		<div class="card mr-3 ml-3 mt-4" th:if="${contact}">
 			<div class="card-body">
 				<div class="container text-center">
 					<img src="" class="rounded-circle" style="height: 150px; width: 150px;" th:src="@{'/img/'+${contact.image}}" alt="" />
@@ -48,14 +52,10 @@
 				<button class="btn btn-danger btn-sm btn-block">Delete</button>
 
 			</div>
-
-
-
-
-
-
-
 		</div>
+		<h1 class="mt-5" th:unless="${contact}">No contact with this ID is associated with your profile.</h1>
+
+
 
 	</section>
 

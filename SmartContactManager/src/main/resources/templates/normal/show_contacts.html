@@ -7,8 +7,14 @@
 <body>
 	<section>
 		<div class="card mt-8">
-			<div class="container text-center">Your Contacts</div>
+			<div style="color: blue;" class="container text-center h1">Your Contacts</div>
 			<div class="card-body">
+				<div th:if="${session.message}" class="container text-center">
+					<div th:classappend="${'alert '+session.message.type}" class="alert text-center" role="alert">
+						<span th:text="${session.message.content}"></span>
+					</div>
+					<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+				</div>
 
 				<table class="table table-dark">
 					<thead>
@@ -23,13 +29,13 @@
 					<tbody th:each="c: ${contacts}">
 						<tr>
 							<th scope="row" th:text="${'SCMUS' + c.cid}"></th>
-							<td>
-								<img src="" class="my_profile_picture" th:src="@{'/img/'+${c.image}}" alt="profile Photo" />
-								<a th:href="@{'/user/'+${c.cid}+'/contacts'}"><span th:text="${c.name}"></span></a>
-								
-							</td>
+							<td><img src="" class="my_profile_picture" th:src="@{'/img/'+${c.image}}" alt="profile Photo" /> <a th:href="@{'/user/'+${c.cid}+'/contacts'}"><span th:text="${c.name}"></span></a></td>
 							<td th:text="${c.email}"></td>
 							<td th:text="${c.phone}"></td>
+							<td><a th:href="@{'/user/'+${c.cid}+'/update'}"><i style="color: green;" class="fas fa-user-edit"></i></a>
+							<!--This is imp we want to give an alert before actually deleting we are using one function which we made in our common js  -->
+							<a href="#" th:onclick="|deleteContact(${c.cid})|"><i style="color: red" class="fas fa-trash-alt ml-1"></i></a></td>
+
 						</tr>
 					</tbody>
 				</table>
@@ -38,8 +44,9 @@
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">
 						<li th:if="${currentPage != 0}" class="page-item"><a th:href="@{'/user/show_contacts/'+${currentPage-1}}" class="page-link" href="#">Previous</a></li>
-						<li th:classappend="${currentPage==i-1?'active':''}" th:each="i : ${#numbers.sequence(1,totalPages)}" class="page-item"><a th:href="@{'/user/show_contacts/'+${i-1}}"class="page-link" href="#"><span th:text="${i}"></span></a></li>
-						<li th:if="${currentPage+1 != totalPages}"class="page-item"><a th:href="@{'/user/show_contacts/'+${currentPage+1}}" class="page-link" href="#">Next</a></li>
+						<li th:classappend="${currentPage==i-1?'active':''}" th:each="i : ${#numbers.sequence(1,totalPages)}" class="page-item"><a th:href="@{'/user/show_contacts/'+${i-1}}" class="page-link"
+							href="#"><span th:text="${i}"></span></a></li>
+						<li th:if="${currentPage+1 != totalPages}" class="page-item"><a th:href="@{'/user/show_contacts/'+${currentPage+1}}" class="page-link" href="#">Next</a></li>
 					</ul>
 				</nav>
 
