@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -83,6 +84,7 @@ public class UserController {
 //			Processing image
 			if (file.isEmpty()) {
 				System.out.println("File is empty");
+				contact.setImage("defaultcontact.png");
 			} else {
 				contact.setImage(file.getOriginalFilename());
 				File saveFile = new ClassPathResource("static/img").getFile();
@@ -130,6 +132,16 @@ public class UserController {
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", contacts.getTotalPages());
 		return "normal/show_contacts";
+	}
+
+//	Getting the details clicking on name
+	@GetMapping("/{cid}/contacts")
+	public String getDetails(@PathVariable("cid") int cid, Model model) {
+//		System.out.println(cid);
+		Optional<Contact> contatOptional = this.contactRepository.findById(cid);
+		Contact contact = contatOptional.get();
+		model.addAttribute("contact", contact);
+		return "normal/contact_detail";
 	}
 
 }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org" th:replace="normal/userbase::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Contact detail</title>
+</head>
+<body>
+	<section>
+		<div class="card mr-3 ml-3 mt-4">
+			<div class="card-body">
+				<div class="container text-center">
+					<img src="" class="rounded-circle" style="height: 150px; width: 150px;" th:src="@{'/img/'+${contact.image}}" alt="" />
+
+					<table class="table mt-2">
+						<thead>
+							<tr>
+								<th scope="row">ID</th>
+								<td th:text="${contact.cid}"></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">Name</th>
+								<td th:text="${contact.name}+${contact.secondName}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Email</th>
+								<td th:text="${contact.email}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Contact</th>
+								<td th:text="${contact.phone}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Work</th>
+								<td th:text="${contact.work}"></td>
+							</tr>
+
+						</tbody>
+					</table>
+					<div class="container mt-3">
+						<h3>About</h3>
+						<th:block th:utext="${contact.about}"></th:block>
+					</div>
+
+				</div>
+				<button class="btn btn-primary btn-sm btn-block">Update</button>
+				<button class="btn btn-danger btn-sm btn-block">Delete</button>
+
+			</div>
+
+
+
+
+
+
+
+		</div>
+
+	</section>
+
+
+</body>
+</html>
