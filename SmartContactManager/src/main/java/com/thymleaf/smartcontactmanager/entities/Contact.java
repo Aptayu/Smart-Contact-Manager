@@ -26,12 +26,12 @@ public class Contact {
 	@ManyToOne()
 	private ContactUser contactUser;
 
-//	@Override
-//	public String toString() {
-//		return "Contact [cid=" + cid + ", name=" + name + ", secondName=" + secondName + ", work=" + work + ", email="
-//				+ email + ", phone=" + phone + ", about=" + about + ", image=" + image + ", contactUser=" + contactUser
-//				+ "]";
-//	}
+	@Override
+	public String toString() {
+		return "Contact [cid=" + cid + ", name=" + name + ", secondName=" + secondName + ", work=" + work + ", email="
+				+ email + ", phone=" + phone + ", about=" + about + ", image=" + image + ", contactUser=" + contactUser
+				+ "]";
+	}
 
 	public ContactUser getContactUser() {
 		return contactUser;
@@ -103,6 +103,12 @@ public class Contact {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return this.cid == ((Contact) obj).getCid();
 	}
 
 }

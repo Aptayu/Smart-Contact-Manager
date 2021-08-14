@@ -160,8 +160,8 @@ public class UserController {
 		}
 
 	}
-
 //	delete a particular contact
+
 	@GetMapping("/{cid}/delete")
 	public String deleteContact(@PathVariable("cid") int cid, Principal principal, HttpSession session) {
 		try {
@@ -171,12 +171,24 @@ public class UserController {
 			Contact contact = contatOptional.get();
 
 			if (name.equals(contact.getContactUser().getEmail())) {
-//				we'll set the user associated with it to null otherwise it can create problems
-				contact.setContactUser(null);
+//				As we are not using service layer setting the contactUser null and
+//				then caLLINg the delete will only disassocaite our contact from User but
+//				not delete in our database
+//				we useed the property orphan null in our entity and deleteing the contact with the 
+//				help of user repository so that contact becomes orphan and cascade property will 
+//				help us to remove it from database
+				ContactUser contactUser = this.contactUserRepository.getContactUserByContactUsername(name);
+//				overide equals method so that it knows what you want to delete
+				contactUser.getContacts().remove(contact);
+//				will save user again so that it refreshes
+				this.contactUserRepository.save(contactUser);
+//				contact.setContactUser(null);
 //				we should also be deleting the image associated with in our folder.
 //				getting the image name8
-				String image = contact.getImage();
-				this.contactRepository.delete(contact);
+//				String image = contact.getImage();
+//				Deleteing image code from our server
+
+//				this.contactRepository.delete(contact);
 			}
 			session.setAttribute("message", new Message("Contact deleted successfully", "alert-success"));
 			return "redirect:/user/show_contacts/0";
@@ -185,6 +197,81 @@ public class UserController {
 			session.setAttribute("message", new Message("Something went wrong. Please try again", "alert-danger"));
 			return "redirect:/user/show_contacts/0";
 
+		}
+
+	}
+
+//	Updating the contact
+	@GetMapping("/{cid}/update")
+	public String updateContact(@PathVariable("cid") int cid, Principal principal, Model model, HttpSession session) {
+		try {
+//			We will faetch the details and get it in the new template
+			String name = principal.getName();
+			Optional<Contact> contatOptional = this.contactRepository.findById(cid);
+			Contact contact = contatOptional.get();
+//we need additional security check as we are using get mapping
+			if (name.equals(contact.getContactUser().getEmail())) {
+				model.addAttribute("contact", contact);
+			}
+			return "normal/updateContact";
+
+		} catch (Exception e) {
+			session.setAttribute("message", new Message("Something went wrong. Please try again", "alert-danger"));
+			return "normal/updateContact";
+
+		}
+
+	}
+
+//	Processing add contact form
+	@PostMapping("/process-update-contact")
+	public String updateProcessContact(@ModelAttribute Contact contact,
+			@RequestParam("profileImage") MultipartFile file, Principal principal, HttpSession httpSession,
+			Model model) {
+//		This contact will be associate with one user therefore we can take help from principal
+//		Either you can make one contact user repo here we can directly save it using the repo we have already
+		System.out.println(contact);
+		try {
+//			lets associate the contact we are updating with a user that is logged in
+			String name = principal.getName();
+			ContactUser contactUser = contactUserRepository.getContactUserByContactUsername(name);
+			contact.setContactUser(contactUser);
+
+//			id which needs to be updated and we will delete previous contact
+//			Contact oldContact = this.contactRepository.getById(contact.getCid());
+//			lets disassociate with the user which is login otherwise it wont let you delete
+//			oldContact.setContactUser(null);
+//			delete the old image in our server
+
+//			now delete the old contact
+//			this.contactRepository.delete(oldContact);
+
+//			Processing image
+			if (file.isEmpty()) {
+//				System.out.println("File is empty");
+				contact.setImage("defaultcontact.png");
+			} else {
+				contact.setImage(file.getOriginalFilename());
+				File saveFile = new ClassPathResource("static/img").getFile();
+				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+			}
+//			id which needs to be updated
+			this.contactRepository.save(contact);
+//			System.out.println(contact);
+//			everthing worked well send success message will use session
+			httpSession.setAttribute("message",
+					new com.thymleaf.smartcontactmanager.helper.Message("Successfully updated.", "success"));
+
+			return "redirect:/user/" + contact.getCid() + "/update";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+//			send error message
+			httpSession.setAttribute("message",
+					new com.thymleaf.smartcontactmanager.helper.Message("Something went wrong. Try again", "danger"));
+
+			return "redirect:/user/" + contact.getCid() + "/update";
 		}
 
 	}

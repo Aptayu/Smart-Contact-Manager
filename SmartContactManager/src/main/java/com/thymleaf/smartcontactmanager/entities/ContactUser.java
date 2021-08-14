@@ -31,7 +31,9 @@ public class ContactUser {
 	private String imageUrl;
 	@Column(length = 500)
 	private String about;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "contactUser")
+//	orphan removal means if any child entity is not assocaited with any
+//	parent it will be removed
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "contactUser", orphanRemoval = true)
 	private List<Contact> contacts = new ArrayList<>();
 
 	public List<Contact> getContacts() {

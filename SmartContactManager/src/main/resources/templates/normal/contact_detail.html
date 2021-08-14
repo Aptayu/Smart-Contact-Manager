@@ -48,8 +48,8 @@
 					</div>
 
 				</div>
-				<button class="btn btn-primary btn-sm btn-block">Update</button>
-				<button class="btn btn-danger btn-sm btn-block">Delete</button>
+				<a th:href="@{'/user/'+${contact.cid}+'/update'}" class="btn btn-primary btn-sm btn-block">Update</a>
+				<button th:onclick="|deleteContact(${contact.cid})|" class="btn btn-danger btn-sm btn-block">Delete</button>
 
 			</div>
 		</div>
