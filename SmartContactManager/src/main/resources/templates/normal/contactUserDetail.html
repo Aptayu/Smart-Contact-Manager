@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org" th:replace="normal/userbase::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>View all contacts</title>
+</head>
+<body>
+	<section>
+		<div class="container mt-2">
+			<div class="container text-center mt-5">
+				<img style="height: 250px; width: 250px" class="my_profile_picture" th:src="@{'/img/'+ defaultcontact.png}" alt="profile Photo" />
+
+
+			</div>
+
+			<table class="table table-striped mt-2 text-center">
+				<thead>
+					<tr>
+						<th scope="row">ID</th>
+						<th th:text="${'USER' + userDetails.id}"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">Name</th>
+						<td><span th:text="${userDetails.name}"></span></td>
+					</tr>
+					<tr>
+						<th scope="row">Email</th>
+						<td th:text="${userDetails.email}"></td>
+					</tr>
+					<tr>
+						<th scope="row">Role</th>
+						<td th:text="${userDetails.role}"></td>
+					</tr>
+					<tr>
+						<th scope="row">Premium</th>
+						<td th:text="${userDetails.enable}"></td>
+					</tr>
+
+				</tbody>
+			</table>
+
+		</div>
+
+
+
+	</section>
+
+
+</body>
+</html>

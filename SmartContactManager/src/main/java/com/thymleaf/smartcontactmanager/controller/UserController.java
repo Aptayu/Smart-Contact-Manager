@@ -56,7 +56,13 @@ public class UserController {
 //	When user login(user-dashboard home)
 	@RequestMapping("/index")
 	public String dashboard(Model model, Principal principal) {
-		return "normal/user_dashboard";
+		return "normal/index";
+	}
+
+//	When user login(user-detail home)
+	@RequestMapping("/userDetail")
+	public String userProfileDetail(Model model, Principal principal) {
+		return "normal/contactUserDetail";
 	}
 
 //	open add form controller

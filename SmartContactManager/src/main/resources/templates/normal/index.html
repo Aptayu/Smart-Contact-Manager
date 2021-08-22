@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org" th:replace="normal/userbase::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>View all contacts</title>
+</head>
+<body>
+	<section>
+		<div class="container mt-2">
+			<div class="container text-center mt-5">
+				<img style="height: 250px; width: 250px" class="my_profile_picture" th:src="@{'/img/'+ call.jpg}" alt="profile Photo" />
+
+
+			</div>
+			<div class="text-center">
+					<h2>Hi welcome to our application. Lets us help you to store your contacts in our cloud server. Rest assured your contacts are safe with us.</h2>
+					<h2>Start adding contact now...</h2>
+					<a href="" class="btn btn-primary" th:href="@{/user/add-contact}"><i class="fas fa-pencil-alt"></i>Add contact</a>
+					
+			</div>
+
+			
+
+		</div>
+
+
+
+	</section>
+
+
+</body>
+</html>

@@ -208,7 +208,18 @@
 	object-fit:cover;	
 }
 
+/*Search functionality css  */
 
+.search-container{
+	position: relative;
+}
+
+.serach-result{
+	position: absolute;
+	background: white;
+	width: 100%;
+	display: none;
+}
 
 
 

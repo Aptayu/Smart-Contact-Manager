@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "all_contacts")
 public class Contact {
@@ -24,6 +26,7 @@ public class Contact {
 	private String about;
 	private String image;
 	@ManyToOne()
+	@JsonIgnore
 	private ContactUser contactUser;
 
 	@Override
